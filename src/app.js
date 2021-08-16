@@ -12,10 +12,12 @@ app.use(express.json())
 app.use(cors())
 
 // GraphQL endpoints
-const { auth } = require('./schemas/auth')
+const { query } = require('./resolvers/query')
+const { mutation } = require('./resolvers/mutation')
 
 const schema = new GraphQLSchema({
-  auth
+  query,
+  mutation
 })
 
 app.use(
