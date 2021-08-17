@@ -15,6 +15,14 @@ app.use(cors())
 const { query } = require('./resolvers/query')
 const { mutation } = require('./resolvers/mutation')
 
+const context = req => {
+  const token = req.headers.authorization || 'null'
+
+  // Perform authentication here. Should return token and the type of user.
+
+  return { token }
+}
+
 const schema = new GraphQLSchema({
   query,
   mutation
@@ -22,10 +30,11 @@ const schema = new GraphQLSchema({
 
 app.use(
   '/graphql',
-  graphqlHTTP({
+  graphqlHTTP(req => ({
     schema,
+    context: () => context(req),
     graphiql: { headerEditorEnabled: true }
-  })
+  }))
 )
 
 module.exports = app
