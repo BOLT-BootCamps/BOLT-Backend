@@ -2,14 +2,16 @@ const graphql = require('graphql')
 
 const { GraphQLObjectType } = graphql
 
-const { loginSchema, registerSchema } = require('./auth')
+// const { loginSchema, registerSchema } = require('./auth')
+
+const { user, users } = require('./userSchema')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   type: 'Query',
   fields: {
-    login: loginSchema,
-    register: registerSchema
+    user: user,
+    users: users
   }
 })
 

@@ -8,4 +8,6 @@ const port = process.env.PORT
 
 const server = http.createServer(app)
 
+console.log(port)
+
 server.listen(port)
