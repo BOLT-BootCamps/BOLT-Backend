@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
     })
   }
 
-  const addUser = new PS({ text: 'INSERT INTO users(firstname, lastname, username, email) VALUES($1, $2)' })
+  const addUser = new PS({ name: 'add-user', text: 'INSERT INTO users(firstname, lastname, username, email) VALUES($1, $2, $3, $4)' })
 
   addUser.values = [firstname, lastname, username, email]
 
