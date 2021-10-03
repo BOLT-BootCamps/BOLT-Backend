@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { db } = require('../database/pgAdaptor')
-const { userExists } = require('../services/database')
+const { userDB } = require('../services/database')
 const { PreparedStatement: PS } = require('pg-promise')
 require('dotenv').config()
 
@@ -43,7 +43,7 @@ router.post('/emailExists', async (req, res, next) => {
     })
   }
   console.log(email);
-  const user = await userExists(email);
+  const user = await userDB.userExists(email);
 
   if (user) {
     res.status(200).send()

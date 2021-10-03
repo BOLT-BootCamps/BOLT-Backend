@@ -38,6 +38,60 @@ const userExists = async (email) => {
     })
 }
 
-exports.getUsers = getUsers
-exports.getUser = getUser
-exports.userExists = userExists
+const getEvents = async () => {
+  const events = new PS({ name: 'get-events', text: 'SELECT * FROM events' })
+
+  return db.manyOrNone(events)
+    .then(res => {
+      return res
+    })
+    .catch(error => {
+      console.log(error)
+      return error
+    })
+}
+
+const getEvent = async (id) => {
+  const event = new PS({ name: 'get-event', text: 'SELECT * FROM event WHERE id=$1' })
+  event.values = [id]
+  return db.one(event)
+    .then(res => {
+      return res
+    })
+    .catch(error => {
+      console.log(error)
+      return error
+    })
+}
+
+const updateEvent = async (event) => {
+  const updatedEvent = new PS({ name: 'update-event', text: 'UPDATE events SET name=$1, description=$2, date=$3 WHERE id=$4' })
+  updatedEvent.values = [event.name, event.description, event.date, event.id]
+  return db.none(updatedEvent)
+    .catch(error => {
+      console.log(error)
+    })
+}
+
+const addEvent = async (event) => {
+  const newEvent = new PS({ name: 'add-event', text: 'INSERT INTO events(name, description, date) VALUES($1, $2, $3)' })
+  newEvent.values = [event.name, event.description, event.date]
+  return db.none(newEvent)
+    .catch(error => {
+      console.log(error)
+    })
+}
+
+exports.userDB = {
+  getUsers,
+  getUser,
+  userExists
+}
+
+exports.eventDB = {
+  getEvent,
+  getEvents,
+  updateEvent,
+  addEvent
+}
+

@@ -6,30 +6,25 @@ const checkToken = require('../services/tokenAuth')
 
 const { userType, usersType } = require('../types/user')
 
-const { getUsers, getUser } = require('../services/database')
+const { userDB } = require('../services/database')
 
 const user = {
   name: 'User',
   type: userType,
   args: { email: { type: new GraphQLNonNull(GraphQLString) } },
   async resolve (_, obj, context) {
-    return getUser(obj.email)
-    /*
     const { token } = context()
     const { error, decoded } = await checkToken(token)
     if (error) {
       throw new Error(error)
-    } else if (decoded) {
-      console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
-      if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin' && decoded.email !== obj.email) {
-        throw new Error('Not Authorized.')
-      } else {
-        return getUser(decoded.email)
-      }
     }
-
+    console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
+    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin' && decoded.email !== obj.email) {
+      throw new Error('Not Authorized.')
+    } else {
+      return userDB.getUser(decoded.email)
+    }
     return null
-    */
   }
 }
 
@@ -47,7 +42,7 @@ const users = {
       if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
         throw new Error('Not Authorized.')
       } else {
-        return getUsers()
+        return userDB.getUsers()
       }
     }
 
