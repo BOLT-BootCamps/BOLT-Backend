@@ -24,7 +24,6 @@ const user = {
     } else {
       return userDB.getUser(decoded.email)
     }
-    return null
   }
 }
 

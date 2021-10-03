@@ -13,7 +13,7 @@ const RootQuery = new GraphQLObjectType({
     user: user,
     users: users,
     event: event,
-    events: events,
+    events: events
   }
 })
 

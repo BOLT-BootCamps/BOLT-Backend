@@ -1,8 +1,8 @@
 module.exports = {
   env: {
-    browser: true,
     es2021: true,
-    node: true
+    node: true,
+    mocha: true
   },
   extends: [
     'standard'
@@ -10,5 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module'
+  },
+  rules: {
   }
 }
