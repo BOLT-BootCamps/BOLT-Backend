@@ -1,0 +1,26 @@
+name: Deploy Frontend
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy-frontend-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Pull from GitHub repo
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: |
+            cd /var/www/BOLT-Backend
+            git pull
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            nvm use
+            npm install
+            pm2 reload "Bolt Backend"
