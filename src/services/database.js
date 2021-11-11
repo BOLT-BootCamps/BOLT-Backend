@@ -94,4 +94,3 @@ exports.eventDB = {
   updateEvent,
   addEvent
 }
-

@@ -1,0 +1,1 @@
+psql -h localhost -d [database name] -U [username] -f template

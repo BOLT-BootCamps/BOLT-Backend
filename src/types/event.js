@@ -8,7 +8,7 @@ const eventType = new GraphQLObjectType({
     id: { type: GraphQLInt },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-    date: { type: GraphQLDate },
+    date: { type: GraphQLDate }
   }
 })
 
@@ -18,7 +18,7 @@ const eventInput = new GraphQLInputObjectType({
   fields: {
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-    date: { type: GraphQLDate },
+    date: { type: GraphQLDate }
   }
 })
 
