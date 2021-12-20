@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLDate, GraphQLList, GraphQLInputObjectType } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType } = graphql
 
 const eventType = new GraphQLObjectType({
   name: 'event',
@@ -8,7 +8,11 @@ const eventType = new GraphQLObjectType({
     id: { type: GraphQLInt },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-    date: { type: GraphQLDate }
+    start_date: { type: GraphQLInt },
+    end_date: { type: GraphQLInt },
+    image_url: { type: GraphQLString },
+    zoom_url: { type: GraphQLString },
+    bootcamp: { type: GraphQLInt }
   }
 })
 
@@ -18,7 +22,11 @@ const eventInput = new GraphQLInputObjectType({
   fields: {
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-    date: { type: GraphQLDate }
+    start_date: { type: GraphQLInt },
+    end_date: { type: GraphQLInt },
+    image_url: { type: GraphQLString },
+    zoom_url: { type: GraphQLString },
+    bootcamp: { type: GraphQLInt }
   }
 })
 

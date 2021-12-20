@@ -1,7 +1,8 @@
 const graphql = require('graphql')
 const { GraphQLObjectType } = graphql
 
-const { updateEvent, addEvent } = require('./eventSchema')
+const { updateEvent, addEvent, deleteEvent } = require('./eventSchema')
+const { updateApplication, addApplication, deleteApplication } = require('./applicationSchema')
 const { updateUser } = require('./userSchema')
 
 const RootMutation = new GraphQLObjectType({
@@ -9,8 +10,14 @@ const RootMutation = new GraphQLObjectType({
   type: 'Mutation',
   fields: {
     user: updateUser,
+
     updateEvent: updateEvent,
-    addEvent: addEvent
+    addEvent: addEvent,
+    deleteEvent: deleteEvent,
+
+    updateApplication: updateApplication,
+    addApplication: addApplication,
+    deleteApplication: deleteApplication
   }
 })
 

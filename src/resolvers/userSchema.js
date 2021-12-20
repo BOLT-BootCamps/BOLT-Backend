@@ -4,7 +4,7 @@ const { GraphQLString, GraphQLNonNull } = graphql
 
 const checkToken = require('../services/tokenAuth')
 
-const { userType, usersType } = require('../types/user')
+const { userType, usersType } = require('../types/user.types')
 
 const { userDB } = require('../services/database')
 

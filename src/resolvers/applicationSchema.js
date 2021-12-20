@@ -4,13 +4,13 @@ const { GraphQLInt, GraphQLString, GraphQLNonNull } = graphql
 
 const checkToken = require('../services/tokenAuth')
 
-const { eventType, eventsType, eventInput } = require('../types/event.types')
+const { applicationType, applicationsType, applicationInput } = require('../types/application.types')
 
-const { eventDB } = require('../services/database')
+const { applicationDB } = require('../services/database')
 
-const event = {
-  name: 'Event',
-  type: eventType,
+const application = {
+  name: 'Application',
+  type: applicationType,
   args: { id: { type: new GraphQLNonNull(GraphQLInt) } },
   async resolve (_, obj, context) {
     const { token } = context()
@@ -18,28 +18,28 @@ const event = {
     if (error) {
       throw new Error(error)
     }
-    return eventDB.getEvent(obj.id)
+    return applicationDB.getApplication(obj.id)
   }
 }
 
-const events = {
-  name: 'Events',
-  type: eventsType,
+const applications = {
+  name: 'Applications',
+  type: applicationsType,
   async resolve (_, obj, context) {
     const { token } = context()
     const { error } = await checkToken(token)
     if (error) {
       throw new Error(error)
     }
-    return eventDB.getEvents()
+    return applicationDB.getApplications()
   }
 }
 
-const updateEvent = {
-  name: 'Update Event',
+const updateApplication = {
+  name: 'Update Application',
   type: GraphQLString,
   args: {
-    event: { type: eventInput }
+    event: { type: applicationInput }
   },
   async resolve (_, obj, context) {
     const { token, decoded } = context()
@@ -51,7 +51,7 @@ const updateEvent = {
       throw new Error('Not Authorized.')
     }
     try {
-      await eventDB.updateEvent(obj.event)
+      await applicationDB.updateApplication(obj)
       return 'success'
     } catch {
       return 'failure'
@@ -59,11 +59,11 @@ const updateEvent = {
   }
 }
 
-const addEvent = {
-  name: 'Add Event',
+const addApplication = {
+  name: 'Add Application',
   type: GraphQLString,
   args: {
-    event: { type: eventInput }
+    event: { type: applicationInput }
   },
   async resolve (_, obj, context) {
     const { token, decoded } = context()
@@ -76,7 +76,7 @@ const addEvent = {
     }
 
     try {
-      await eventDB.addEvent(obj)
+      await applicationDB.addApplication(obj)
       return 'success'
     } catch {
       return 'failure'
@@ -84,8 +84,8 @@ const addEvent = {
   }
 }
 
-const deleteEvent = {
-  name: 'Delete Event',
+const deleteApplication = {
+  name: 'Delete Application',
   type: GraphQLString,
   args: { id: { type: new GraphQLNonNull(GraphQLInt) } },
   async resolve (_, obj, context) {
@@ -99,15 +99,16 @@ const deleteEvent = {
       throw new Error('Not Authorized.')
     }
     try {
-      await eventDB.deleteEvent(obj.id)
+      await applicationDB.deleteApplication(obj.id)
       return 'success'
     } catch {
       return 'failure'
     }
   }
 }
-exports.event = event
-exports.events = events
-exports.updateEvent = updateEvent
-exports.addEvent = addEvent
-exports.deleteEvent = deleteEvent
+
+exports.application = application
+exports.applications = applications
+exports.updateApplication = updateApplication
+exports.addApplication = addApplication
+exports.deleteApplication = deleteApplication
