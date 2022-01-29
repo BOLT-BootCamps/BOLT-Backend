@@ -17,6 +17,15 @@ function getKey (header, callback) {
 }
 
 async function checkToken (token) {
+  if (process.env.LEVEL === 'development') {
+    return {
+      error: null,
+      decoded: {
+        'https://apibolt.zhehaizhang.com/roles': 'Admin'
+      }
+    }
+  }
+
   if (token) {
     const result = new Promise((resolve, reject) => {
       jwt.verify(

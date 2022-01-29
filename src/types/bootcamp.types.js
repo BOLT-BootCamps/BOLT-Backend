@@ -2,8 +2,8 @@ const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType } = graphql
 const GraphQLDate = require('graphql-date')
 
-const applicationType = new GraphQLObjectType({
-  name: 'application',
+const bootcampType = new GraphQLObjectType({
+  name: 'bootcamp',
   type: 'Mutation',
   fields: {
     id: { type: GraphQLInt },
@@ -12,13 +12,12 @@ const applicationType = new GraphQLObjectType({
     start_date: { type: GraphQLDate },
     end_date: { type: GraphQLDate },
     image_url: { type: GraphQLString },
-    form_url: { type: GraphQLString },
-    bootcamp: { type: GraphQLInt }
+    default_zoom_url: { type: GraphQLString }
   }
 })
 
-const applicationInput = new GraphQLInputObjectType({
-  name: 'applicationInput',
+const bootcampInput = new GraphQLInputObjectType({
+  name: 'bootcampInput',
   type: 'Input',
   fields: {
     name: { type: GraphQLString },
@@ -26,13 +25,12 @@ const applicationInput = new GraphQLInputObjectType({
     start_date: { type: GraphQLInt },
     end_date: { type: GraphQLInt },
     image_url: { type: GraphQLString },
-    form_url: { type: GraphQLString },
-    bootcamp: { type: GraphQLInt }
+    default_zoom_url: { type: GraphQLString }
   }
 })
 
-const applicationsType = new GraphQLList(applicationType)
+const bootcampsType = new GraphQLList(bootcampType)
 
-exports.applicationType = applicationType
-exports.applicationInput = applicationInput
-exports.applicationsType = applicationsType
+exports.bootcampType = bootcampType
+exports.bootcampInput = bootcampInput
+exports.bootcampsType = bootcampsType

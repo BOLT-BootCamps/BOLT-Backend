@@ -4,6 +4,7 @@ const { GraphQLObjectType } = graphql
 const { updateEvent, addEvent, deleteEvent } = require('./eventSchema')
 const { updateApplication, addApplication, deleteApplication } = require('./applicationSchema')
 const { updateUser } = require('./userSchema')
+const { addBootcamp, updateBootcamp, deleteBootcamp } = require('./bootcampSchema')
 
 const RootMutation = new GraphQLObjectType({
   name: 'RootMutationType',
@@ -17,7 +18,11 @@ const RootMutation = new GraphQLObjectType({
 
     updateApplication: updateApplication,
     addApplication: addApplication,
-    deleteApplication: deleteApplication
+    deleteApplication: deleteApplication,
+
+    addBootcamp,
+    updateBootcamp,
+    deleteBootcamp
   }
 })
 

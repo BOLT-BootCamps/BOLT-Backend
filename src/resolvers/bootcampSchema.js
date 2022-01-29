@@ -4,13 +4,13 @@ const { GraphQLInt, GraphQLString, GraphQLNonNull } = graphql
 
 const checkToken = require('../services/tokenAuth')
 
-const { applicationType, applicationsType, applicationInput } = require('../types/application.types')
+const { bootcampType, bootcampsType, bootcampInput } = require('../types/bootcamp.types')
 
-const { applicationDB } = require('../services/database')
+const { bootcampDB } = require('../services/database')
 
-const application = {
-  name: 'Application',
-  type: applicationType,
+const bootcamp = {
+  name: 'Bootcamp',
+  type: bootcampType,
   args: { id: { type: new GraphQLNonNull(GraphQLInt) } },
   async resolve (_, obj, context) {
     const { token } = context()
@@ -18,28 +18,28 @@ const application = {
     if (error) {
       throw new Error(error)
     }
-    return applicationDB.getApplication(obj.id)
+    return bootcampDB.getBootcamp(obj.id)
   }
 }
 
-const applications = {
-  name: 'Applications',
-  type: applicationsType,
+const bootcamps = {
+  name: 'Bootcamps',
+  type: bootcampsType,
   async resolve (_, obj, context) {
     const { token } = context()
     const { error } = await checkToken(token)
     if (error) {
       throw new Error(error)
     }
-    return applicationDB.getApplications()
+    return bootcampDB.getBootcamps()
   }
 }
 
-const updateApplication = {
-  name: 'Update Application',
+const updateBootcamp = {
+  name: 'Update Bootcamp',
   type: GraphQLString,
   args: {
-    application: { type: applicationInput },
+    bootcamp: { type: bootcampInput },
     id: { type: GraphQLInt }
   },
   async resolve (_, obj, context) {
@@ -52,7 +52,7 @@ const updateApplication = {
       throw new Error('Not Authorized.')
     }
     try {
-      await applicationDB.updateApplication(obj.application, obj.id)
+      await bootcampDB.updateBootcamp(obj.bootcamp, obj.id)
       return 'success'
     } catch {
       return 'failure'
@@ -60,11 +60,11 @@ const updateApplication = {
   }
 }
 
-const addApplication = {
-  name: 'Add Application',
+const addBootcamp = {
+  name: 'Add Bootcamp',
   type: GraphQLString,
   args: {
-    application: { type: applicationInput }
+    bootcamp: { type: bootcampInput }
   },
   async resolve (_, obj, context) {
     const { token } = context()
@@ -77,16 +77,16 @@ const addApplication = {
     }
 
     try {
-      await applicationDB.addApplication(obj.application)
+      await bootcampDB.addBootcamp(obj.bootcamp)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (e) {
+      return e.message
     }
   }
 }
 
-const deleteApplication = {
-  name: 'Delete Application',
+const deleteBootcamp = {
+  name: 'Delete Bootcamp',
   type: GraphQLString,
   args: { id: { type: new GraphQLNonNull(GraphQLInt) } },
   async resolve (_, obj, context) {
@@ -100,7 +100,7 @@ const deleteApplication = {
       throw new Error('Not Authorized.')
     }
     try {
-      await applicationDB.deleteApplication(obj.id)
+      await bootcampDB.deleteBootcamp(obj.id)
       return 'success'
     } catch {
       return 'failure'
@@ -108,8 +108,8 @@ const deleteApplication = {
   }
 }
 
-exports.application = application
-exports.applications = applications
-exports.updateApplication = updateApplication
-exports.addApplication = addApplication
-exports.deleteApplication = deleteApplication
+exports.bootcamp = bootcamp
+exports.bootcamps = bootcamps
+exports.updateBootcamp = updateBootcamp
+exports.addBootcamp = addBootcamp
+exports.deleteBootcamp = deleteBootcamp

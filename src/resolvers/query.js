@@ -6,7 +6,7 @@ const { user, users } = require('./userSchema')
 
 const { applications, application } = require('./applicationSchema')
 
-// const { bootcamps, bootcamp } = require('./bootcampSchema')
+const { bootcamps, bootcamp } = require('./bootcampSchema')
 
 const { event, events } = require('./eventSchema')
 
@@ -23,8 +23,8 @@ const RootQuery = new GraphQLObjectType({
     application,
 
     // Bootcamps
-    // bootcamps,
-    // bootcamp,
+    bootcamps,
+    bootcamp,
 
     // Events
     event: event,

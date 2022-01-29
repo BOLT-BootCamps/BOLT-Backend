@@ -39,11 +39,12 @@ const updateEvent = {
   name: 'Update Event',
   type: GraphQLString,
   args: {
-    event: { type: eventInput }
+    event: { type: eventInput },
+    id: { type: GraphQLInt }
   },
   async resolve (_, obj, context) {
-    const { token, decoded } = context()
-    const { error } = await checkToken(token)
+    const { token } = context()
+    const { error, decoded } = await checkToken(token)
     if (error) {
       throw new Error(error)
     }
@@ -51,7 +52,7 @@ const updateEvent = {
       throw new Error('Not Authorized.')
     }
     try {
-      await eventDB.updateEvent(obj.event)
+      await eventDB.updateEvent(obj.event, obj.id)
       return 'success'
     } catch {
       return 'failure'
@@ -66,8 +67,8 @@ const addEvent = {
     event: { type: eventInput }
   },
   async resolve (_, obj, context) {
-    const { token, decoded } = context()
-    const { error } = await checkToken(token)
+    const { token } = context()
+    const { error, decoded } = await checkToken(token)
     if (error) {
       throw new Error(error)
     }

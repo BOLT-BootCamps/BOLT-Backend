@@ -3,6 +3,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const { graphqlHTTP } = require('express-graphql')
 const { GraphQLSchema } = require('graphql')
+require('dotenv').config()
 
 const app = express()
 
@@ -16,9 +17,12 @@ const { query } = require('./resolvers/query')
 const { mutation } = require('./resolvers/mutation')
 
 const context = req => {
-  const token = req.headers.authorization || 'null'
+  let token = req.headers.authorization || 'null'
 
   // Perform authentication here. Should return token and the type of user.
+  if (process.env.LEVEL === 'development') {
+    token = 'fake'
+  }
 
   return { token }
 }
