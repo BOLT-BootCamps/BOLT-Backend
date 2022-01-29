@@ -2,6 +2,7 @@ name: Deploy Frontend
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 jobs:
   deploy-backend-job:
     runs-on: ubuntu-latest
@@ -19,8 +20,5 @@ jobs:
           script: |
             cd /var/www/BOLT-Backend
             git pull
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            nvm use
             npm install
-            pm2 reload "Bolt Backend"
+            pm2 reload "BOLT-Backend"
