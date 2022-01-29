@@ -154,7 +154,7 @@ const getApplication = async (id) => {
 const updateApplication = async (application, id) => {
   const updatedApplication = new PS({
     name: 'update-application',
-    text: 'UPDATE applications SET name=$1, description=$2, start_date=$3, end_date=$4, image_url=$5, form_url=$6, bootcamp=$7 WHERE id=$8'
+    text: 'UPDATE applications SET name=$1, description=$2, start_date=to_timestamp($3), end_date=to_timestamp($4), image_url=$5, form_url=$6, bootcamp=$7 WHERE id=$8'
   })
 
   updatedApplication.values = [
@@ -177,7 +177,7 @@ const updateApplication = async (application, id) => {
 const addApplication = async (application) => {
   const newApplication = new PS({
     name: 'add-application',
-    text: 'INSERT INTO applications(name, description, start_date, end_date, image_url, form_url, bootcamp) VALUES($1, $2, $3, $4, $5, $6, $7)'
+    text: 'INSERT INTO applications(name, description, start_date, end_date, image_url, form_url, bootcamp) VALUES($1, $2, to_timestamp($3), to_timestamp($4), $5, $6, $7)'
   })
 
   newApplication.values = [
