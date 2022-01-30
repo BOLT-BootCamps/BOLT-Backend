@@ -95,7 +95,6 @@ const deleteApplication = {
     if (error) {
       throw new Error(error)
     }
-    console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
     if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
       throw new Error('Not Authorized.')
     }

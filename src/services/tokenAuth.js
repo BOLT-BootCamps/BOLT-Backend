@@ -17,6 +17,10 @@ function getKey (header, callback) {
 }
 
 async function checkToken (token) {
+  const tokenArr = token.split(' ')
+  if (tokenArr.length === 2) {
+    token = tokenArr[1]
+  }
   if (process.env.LEVEL === 'development') {
     return {
       error: null,
