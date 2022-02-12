@@ -18,13 +18,15 @@ const sqlConfig = {
 }
 
 const query = async () => {
+  const email = 'zhehaizhang1@gmail.com'
   try {
   // make sure that any items are correctly URL encoded in the connection string
     await sql.connect(sqlConfig)
-    const result = await sql.query`select * from dbo.Bootcamps`
+    const result = await sql.query`SELECT COUNT(*) as 'exists' from [dbo].[Users] where sEmail=${email}`
     console.dir(result)
   } catch (err) {
   // ... error checks
+    console.log(err.message)
   }
 }
 
