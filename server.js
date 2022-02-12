@@ -9,5 +9,6 @@ const port = process.env.PORT
 const server = http.createServer(app)
 
 console.log(port)
+console.log('This is the API Identifier', process.env.API_IDENTIFIER)
 
 server.listen(port)
