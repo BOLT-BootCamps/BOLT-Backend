@@ -154,24 +154,19 @@ const getApplication = async (id) => {
 const updateApplication = async (application, id) => {
   try {
     await sql.connect(sqlConfig)
-    await sql.query`UPDATE [dbo].[Events] SET 
+    await sql.query`UPDATE [dbo].[Applications] SET 
     sEventName=${application.sEventName}, 
-    sDescription=${event.sDescription}, 
-    dtStartDate=${event.dtStartDate}, 
-    dtEndDate=${event.dtEndDate}, 
-    sImageUrl=${event.sImageUrl}, 
-    sZoomUrl=${event.sZoomUrl}, 
-    fkiBootcampID=${event.fkiBootcampID}
-    WHERE pkiEventID = ${id}
+    sDescription=${application.sDescription}, 
+    dtStartDate=${application.dtStartDate}, 
+    dtEndDate=${application.dtEndDate}, 
+    sImageUrl=${application.sImageUrl}, 
+    sFormUrl=${application.sFormUrl}, 
+    fkiBootcampID=${application.fkiBootcampID}s
+    WHERE pkiApplicationID = ${id}
     `
   } catch (err) {
     console.log(err.message)
   }
-
-  return db.none(updatedApplication)
-    .catch(error => {
-      console.log(error)
-    })
 }
 
 const addApplication = async (application) => {
