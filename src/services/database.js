@@ -110,9 +110,8 @@ const addEvent = async (event) => {
     ${event.dtStartDate}, 
     ${event.dtEndDate}, 
     ${event.sImageUrl}, 
-    ${event.sZoomUrl}
+    ${event.sZoomUrl})`
     )
-    `)
   } catch (err) {
     console.log(err.message)
   }
@@ -231,7 +230,7 @@ const getBootcamp = async (id) => {
 const updateBootcamp = async (bootcamp, id) => {
   try {
     await sql.connection(sqlConfig)
-    const result = `
+    await sql.query(`
     UPDATE [dbo].[Bootcamps] SET 
       sBootcampName=${bootcamp.sBootcampName}, 
       sDescription=${bootcamp.sDescription},
