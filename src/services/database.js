@@ -213,88 +213,82 @@ const deleteApplication = async (id) => {
 }
 
 const getBootcamps = async () => {
-  const bootcamps = new PS({ name: 'get-bootcamps', text: 'SELECT * FROM bootcamps' })
-
-  return db.manyOrNone(bootcamps)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connection(sqlConfig)
+    const result = await sql.query(`SELECT * FROM bootcamp`)
+    const bootcamp = result.resultset[0]
+    return bootcamp
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const getBootcamp = async (id) => {
-  const bootcamp = new PS({ name: 'get-bootcamp', text: 'SELECT * FROM bootcamp WHERE id=$1' })
-  bootcamp.values = [id]
-  return db.one(bootcamp)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connection(sqlConfig)
+    const result = await sql.query(`SELECT * FROM bootcamp WHERE pkiBootcampID=${id}`)
+    const bootcamp = result.resultset[0]
+    return bootcamp
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const updateBootcamp = async (bootcamp, id) => {
-  const updatedBootcamp = new PS({
-    name: 'update-bootcamp',
-    text: 'UPDATE bootcamps SET name=$1, description=$2, start_date=to_timestamp($3), end_date=to_timestamp($4), image_url=$5, default_zoom_url=$6 WHERE id=$7'
-  })
-
-  updatedBootcamp.values = [
-    bootcamp.name,
-    bootcamp.description,
-    bootcamp.start_date,
-    bootcamp.end_date,
-    bootcamp.image_url,
-    bootcamp.default_zoom_url,
-    id
-  ]
-
-  return db.none(updatedBootcamp)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connection(sqlConfig)
+    const result = `
+    UPDATE bootcamps SET 
+      sBootcampName=${bootcamp.sBootcampName}, 
+      sDescription=${bootcamp.sDescription},
+      dtStartDate=${bootcamp.dtStartDate},
+      dtEndDate=${bootcamp.dtEndDate},
+      sImageUrl=${bootcamp.sImageUrl},
+      sDefaultZoomUrl=${bootcamp.sDefaultZoomUrl}
+    WHERE 
+      pkiBootcampID=${bootcamp.pkiBootcampID}`
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const addBootcamp = async (bootcamp) => {
-  const newBootcamp = new PS({
-    name: 'add-bootcamp',
-    text: 'INSERT INTO bootcamps(name, description, start_date, end_date, image_url, default_zoom_url) VALUES($1, $2, to_timestamp($3), to_timestamp($4), $5, $6)'
-  })
-
-  newBootcamp.values = [
-    bootcamp.name,
-    bootcamp.description,
-    bootcamp.start_date,
-    bootcamp.end_date,
-    bootcamp.image_url,
-    bootcamp.default_zoom_url
-  ]
-
-  return db.none(newBootcamp)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connection(sqlConfig)
+    const result = await sql.query(`
+    INSERT INTO 
+    [dbo].[Bootcamps](
+      sBootcampName,
+      sDescription,
+      dtStartDate,
+      dtEndDate,
+      sImageUrl,
+      sDefaultZoomUrl) 
+    VALUES(
+      ${bootcamp.sBootcampName},
+      ${bootcamp.sDescription},
+      ${bootcamp.dtStartDate},
+      ${bootcamp.dtEndDate},
+      ${bootcamp.sImageUrl},
+      ${bootcamp.sDefaultZoomUrl})`
+      )
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const deleteBootcamp = async (id) => {
-  const bootcamp = new PS({
-    name: 'delete-bootcamp',
-    text: 'DELETE FROM bootcamps WHERE id=$1'
-  })
-
-  bootcamp.values = [
-    id
-  ]
-
-  return db.none(bootcamp)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connection(sqlConfig)
+    const result = await sql.query(`DELETE FROM [dbo].[Bootcamps] WHERE pkiBootcampsID=${id}`)
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 exports.userDB = {
