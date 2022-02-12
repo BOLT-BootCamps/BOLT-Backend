@@ -6,7 +6,7 @@ const applicationType = new GraphQLObjectType({
   name: 'application',
   type: 'Mutation',
   fields: {
-    Application_ID: { type: GraphQLInt },
+    pkiApplicationID: { type: GraphQLInt },
     sApplicationName: { type: GraphQLString },
     sDescription: { type: GraphQLString },
     dtStartDate: { type: GraphQLDate },

@@ -5,7 +5,7 @@ const userType = new GraphQLObjectType({
   name: 'user',
   type: 'Mutation',
   fields: {
-    pkiEventID: { type: GraphQLInt },
+    pkiUserID: { type: GraphQLInt },
     sFirstName: { type: GraphQLString },
     sLastName: { type: GraphQLString },
     sEmail: { type: GraphQLString },

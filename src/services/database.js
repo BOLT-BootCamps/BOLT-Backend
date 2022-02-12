@@ -248,7 +248,7 @@ const updateBootcamp = async (bootcamp, id) => {
       sImageUrl=${bootcamp.sImageUrl},
       sDefaultZoomUrl=${bootcamp.sDefaultZoomUrl}
     WHERE 
-      pkiBootcampID=${bootcamp.pkiBootcampID}`
+      pkiBootcampID=${id}`
   } catch (err) {
     console.log(err.message)
     return err.message
