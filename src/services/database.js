@@ -192,6 +192,7 @@ const addApplication = async (application) => {
   } catch (err) {
     console.log(err.message)
     return err.message
+  }
 }
 
 const deleteApplication = async (id) => {
@@ -201,6 +202,7 @@ const deleteApplication = async (id) => {
   } catch (err) {
     console.log(err.message)
     return err.message
+  }
 }
 
 const getBootcamps = async () => {
