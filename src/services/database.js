@@ -212,15 +212,9 @@ const deleteApplication = async (id) => {
 const getBootcamps = async () => {
   try {
     await sql.connection(sqlConfig)
-<<<<<<< HEAD
     const result = await sql.query(`SELECT * FROM [dbo].[Bootcamps]`)
     const bootcamp = result.resultset[0]
     return bootcamp
-=======
-    const result = await sql.query('SELECT * FROM bootcamp')
-    const bootcamps = result
-    return bootcamps
->>>>>>> cd412e59909f794b2e06865922a130eca57ce2a5
   } catch (err) {
     console.log(err.message)
     return err.message
@@ -242,13 +236,8 @@ const getBootcamp = async (id) => {
 const updateBootcamp = async (bootcamp, id) => {
   try {
     await sql.connection(sqlConfig)
-<<<<<<< HEAD
     const result = `
     UPDATE [dbo].[Bootcamps] SET 
-=======
-    await sql.query(`
-    UPDATE bootcamps SET 
->>>>>>> cd412e59909f794b2e06865922a130eca57ce2a5
       sBootcampName=${bootcamp.sBootcampName}, 
       sDescription=${bootcamp.sDescription},
       dtStartDate=${bootcamp.dtStartDate},
