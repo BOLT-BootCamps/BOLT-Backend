@@ -96,7 +96,7 @@ ALTER TABLE dbo.Users ADD CONSTRAINT PK_UserID PRIMARY KEY(pkiUserID);
 CREATE TABLE dbo.Applications (
     pkiApplicationID BIGINT IDENTITY(1,1) NOT NULL,
     fkiUserID BIGINT NOT NULL,
-    sName NVARCHAR(30) NOT NULL,
+    sApplicationName NVARCHAR(30) NOT NULL,
     dtStartDate DATETIME NOT NULL,
     dtEndDate DATETIME NOT NULL,
     sDescription NVARCHAR(4000),
