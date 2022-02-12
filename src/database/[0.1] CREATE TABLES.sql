@@ -81,6 +81,7 @@ CREATE TABLE dbo.Users (
     bAdmin BIT DEFAULT 0 NOT NULL,
     sFirstName NVARCHAR(30) NOT NULL,
     sLastName NVARCHAR(30) NOT NULL,
+    sEmail NVARCHAR(100) NOT NULL,
     sSchool NVARCHAR(50) NOT NULL,
     sProgram NVARCHAR(50) NOT NULL,
     sYearOfStudy NVARCHAR(30)
