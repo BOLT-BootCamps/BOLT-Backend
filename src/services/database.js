@@ -175,47 +175,44 @@ const updateApplication = async (application, id) => {
 }
 
 const addApplication = async (application) => {
-  const newApplication = new PS({
-    name: 'add-application',
-    text: 'INSERT INTO applications(name, description, start_date, end_date, image_url, form_url, bootcamp) VALUES($1, $2, to_timestamp($3), to_timestamp($4), $5, $6, $7)'
-  })
-
-  newApplication.values = [
-    application.name,
-    application.description,
-    application.start_date,
-    application.end_date,
-    application.image_url,
-    application.form_url,
-    application.bootcamp
-  ]
-
-  return db.none(newApplication)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connection(sqlConfig)
+    await sql.query(`
+    INSERT INTO [dbo].[Applications](
+      sApplicationName,
+      sDescription,
+      dtStartDate,
+      dtEndDate,
+      sImageUrl,
+      sFormUrl,
+      fkiBootcampID)
+    VALUES(
+      ${application.sApplicationName},
+      ${application.sDescription},
+      ${application.dtStartDate},
+      ${application.dtEndDate},
+      ${application.sImageUrl},
+      ${application.sFormUrl},
+      ${application.fkiBootcampID})`
+    )
+  } catch (err) {
+    console.log(err.message)
+    return err.message
 }
 
 const deleteApplication = async (id) => {
-  const application = new PS({
-    name: 'delete-application',
-    text: 'DELETE FROM applications WHERE id=$1'
-  })
-
-  application.values = [
-    id
-  ]
-
-  return db.none(application)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connection(sqlConfig)
+    await sql.query(`DELETE FROM [dbo].[Applications] WHERE pkiApplicatiID=${id}`)
+  } catch (err) {
+    console.log(err.message)
+    return err.message
 }
 
 const getBootcamps = async () => {
   try {
     await sql.connection(sqlConfig)
-    const result = await sql.query(`SELECT * FROM bootcamp`)
+    const result = await sql.query(`SELECT * FROM [dbo].[Bootcamps]`)
     const bootcamp = result.resultset[0]
     return bootcamp
   } catch (err) {
@@ -227,7 +224,7 @@ const getBootcamps = async () => {
 const getBootcamp = async (id) => {
   try {
     await sql.connection(sqlConfig)
-    const result = await sql.query(`SELECT * FROM bootcamp WHERE pkiBootcampID=${id}`)
+    const result = await sql.query(`SELECT * FROM [dbo].[Bootcamps] WHERE pkiBootcampID=${id}`)
     const bootcamp = result.resultset[0]
     return bootcamp
   } catch (err) {
@@ -240,7 +237,7 @@ const updateBootcamp = async (bootcamp, id) => {
   try {
     await sql.connection(sqlConfig)
     const result = `
-    UPDATE bootcamps SET 
+    UPDATE [dbo].[Bootcamps] SET 
       sBootcampName=${bootcamp.sBootcampName}, 
       sDescription=${bootcamp.sDescription},
       dtStartDate=${bootcamp.dtStartDate},
