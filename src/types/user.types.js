@@ -11,7 +11,7 @@ const userType = new GraphQLObjectType({
     sEmail: { type: GraphQLString },
     sSchool: { type: GraphQLString },
     sProgram: { type: GraphQLString },
-    sYearOfStudy: { type: GraphQLString },
+    sYearOfStudy: { type: GraphQLString }
   }
 })
 
@@ -24,7 +24,7 @@ const userInput = new GraphQLInputObjectType({
     sEmail: { type: GraphQLString },
     sSchool: { type: GraphQLString },
     sProgram: { type: GraphQLString },
-    sYearOfStudy: { type: GraphQLString },
+    sYearOfStudy: { type: GraphQLString }
   }
 })
 

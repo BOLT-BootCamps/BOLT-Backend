@@ -51,6 +51,24 @@ const userExists = async (email) => {
   }
 }
 
+const addUser = async (user) => {
+  try {
+    await sql.connect(sqlConfig)
+    await sql.query(`INSERT INTO [dbo].[Users] (
+    sFirstName,
+    sLastName,
+    sEmail,
+    )
+    VALUES (
+    ${user.sFirstName}, 
+    ${user.sLastName}, 
+    ${user.sEmail}, 
+    )
+    `)
+  } catch (err) {
+    console.log(err.message)
+  }
+}
 const getEvents = async () => {
   try {
     await sql.connect(sqlConfig)
@@ -153,16 +171,16 @@ const getApplication = async (id) => {
 const updateApplication = async (application, id) => {
   try {
     await sql.connect(sqlConfig)
-    await sql.query`UPDATE [dbo].[Applications] SET 
-    sEventName=${application.sEventName}, 
+    await sql.query(`UPDATE [dbo].[Applications] SET 
+    sApplicationName=${application.sApplicationName}, 
     sDescription=${application.sDescription}, 
     dtStartDate=${application.dtStartDate}, 
     dtEndDate=${application.dtEndDate}, 
     sImageUrl=${application.sImageUrl}, 
     sFormUrl=${application.sFormUrl}, 
-    fkiBootcampID=${application.fkiBootcampID}s
+    fkiBootcampID=${application.fkiBootcampID}
     WHERE pkiApplicationID = ${id}
-    `
+    `)
   } catch (err) {
     console.log(err.message)
   }
@@ -208,7 +226,7 @@ const deleteApplication = async (id) => {
 const getBootcamps = async () => {
   try {
     await sql.connection(sqlConfig)
-    const result = await sql.query(`SELECT * FROM [dbo].[Bootcamps]`)
+    const result = await sql.query('SELECT * FROM [dbo].[Bootcamps]')
     const bootcamp = result.resultset[0]
     return bootcamp
   } catch (err) {
@@ -287,7 +305,8 @@ const deleteBootcamp = async (id) => {
 exports.userDB = {
   getUsers,
   getUser,
-  userExists
+  userExists,
+  addUser
 }
 
 exports.eventDB = {

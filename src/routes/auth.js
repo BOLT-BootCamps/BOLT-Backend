@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { db } = require('../database/pgAdaptor')
 const { userDB } = require('../services/database')
-const { PreparedStatement: PS } = require('pg-promise')
 require('dotenv').config()
 
 router.post('/addUser', async (req, res, next) => {
@@ -20,14 +18,8 @@ router.post('/addUser', async (req, res, next) => {
     })
   }
 
-  const addUser = new PS({ name: 'add-user', text: 'INSERT INTO users(firstname, lastname, username, email) VALUES($1, $2, $3, $4)' })
+  await userDB.addUser({ firstname, lastname, username, email })
 
-  addUser.values = [firstname, lastname, username, email]
-
-  db.none(addUser)
-    .catch(error => {
-      console.log(error)
-    })
   res.status(200).send()
 })
 
