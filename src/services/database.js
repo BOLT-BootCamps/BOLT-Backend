@@ -1,172 +1,172 @@
-const db = require('../database/pgAdaptor').db
-const { PreparedStatement: PS } = require('pg-promise')
+const sql = require('mssql')
+const sqlConfig = {
+  user: process.env.AZURE_USERNAME,
+  password: process.env.AZURE_PASSWORD,
+  database: process.env.AZURE_DATABASE,
+  server: process.env.AZURE_SERVER_URL,
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000
+  },
+  options: {
+    encrypt: true, // for azure
+    trustServerCertificate: process.env.LEVEL === 'development' // change to true for local dev / self-signed certs
+  }
+}
 
 const getUsers = async () => {
-  const users = new PS({ name: 'get-users', text: 'SELECT * FROM users' })
-
-  return db.manyOrNone(users)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query`select * from [dbo].[Users]`
+    const users = result.recordset
+    return users
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const getUser = async (email) => {
-  const user = new PS({ name: 'get-users', text: 'SELECT * FROM users WHERE email=$1' })
-  user.values = [email]
-  return db.one(user)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query(`select * from [dbo].[Users] WHERE sEmail = ${email}`)
+    const user = result.recordset[0]
+    return user
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const userExists = async (email) => {
-  const user = new PS({ name: 'Check if user exists', text: 'SELECT EXISTS(SELECT email from users where email=$1)' })
-  user.values = [email]
-  return db.one(user)
-    .then(res => res.exists)
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query(`SELECT COUNT(*) as 'exists' from [dbo].[Users] where sEmail=${email}`)
+    const user = result.recordset[0]
+    return user.exists
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const getEvents = async () => {
-  const events = new PS({ name: 'get-events', text: 'SELECT * FROM events' })
-
-  return db.manyOrNone(events)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query('select * from [dbo].[Events]')
+    const events = result.recordset
+    return events
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const getEvent = async (id) => {
-  const event = new PS({ name: 'get-event', text: 'SELECT * FROM event WHERE id=$1' })
-  event.values = [id]
-  return db.one(event)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query(`select * from [dbo].[Events] WHERE pkiEventID = ${id}`)
+    const event = result.recordset[0]
+    return event
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const updateEvent = async (event, id) => {
-  const updatedEvent = new PS({
-    name: 'update-event',
-    text: 'UPDATE events SET name=$1, description=$2, start_date=to_timestamp($3), end_date=to_timestamp($4), image_url=$5, zoom_url=$6, bootcamp=$7 WHERE id=$8'
-  })
-
-  updatedEvent.values = [
-    event.name,
-    event.description,
-    event.start_date,
-    event.end_date,
-    event.image_url,
-    event.zoom_url,
-    event.bootcamp,
-    id
-  ]
-
-  return db.none(updatedEvent)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connect(sqlConfig)
+    await sql.query(`UPDATE [dbo].[Events] SET 
+    sEventName=${event.sEventName}, 
+    sDescription=${event.sDescription}, 
+    dtStartDate=${event.dtStartDate}, 
+    dtEndDate=${event.dtEndDate}, 
+    sImageUrl=${event.sImageUrl}, 
+    sZoomUrl=${event.sZoomUrl}, 
+    fkiBootcampID=${event.fkiBootcampID}
+    WHERE pkiEventID = ${id}
+    `)
+  } catch (err) {
+    console.log(err.message)
+  }
 }
 
 const addEvent = async (event) => {
-  const newEvent = new PS({
-    name: 'add-event',
-    text: 'INSERT INTO events(name, description, start_date, end_date, image_url, zoom_url, bootcamp) VALUES($1, $2, to_timestamp($3), to_timestamp($4), $5, $6, $7)'
-  })
-
-  newEvent.values = [
-    event.name,
-    event.description,
-    event.start_date,
-    event.end_date,
-    event.image_url,
-    event.zoom_url,
-    event.bootcamp
-  ]
-
-  return db.none(newEvent)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connect(sqlConfig)
+    await sql.query(`INSERT INTO [dbo].[Events] (
+    sEventName
+    sDescription,
+    dtStartDate,
+    dtEndDate,
+    sImageUrl,
+    sZoomUrl
+    )
+    VALUES (
+    ${event.sEventName}, 
+    ${event.sDescription}, 
+    ${event.dtStartDate}, 
+    ${event.dtEndDate}, 
+    ${event.sImageUrl}, 
+    ${event.sZoomUrl}
+    )
+    `)
+  } catch (err) {
+    console.log(err.message)
+  }
 }
 
 const deleteEvent = async (id) => {
-  const event = new PS({
-    name: 'delete-event',
-    text: 'DELETE FROM events WHERE id=$1'
-  })
-
-  event.values = [
-    id
-  ]
-
-  return db.none(event)
-    .catch(error => {
-      console.log(error)
-    })
+  try {
+    await sql.connect(sqlConfig)
+    await sql.query(`DELETE FROM [dbo].[Events] WHERE pkiEventID = ${id}`)
+  } catch (err) {
+    console.log(err.message)
+  }
 }
 
 const getApplications = async () => {
-  const applications = new PS({ name: 'get-applications', text: 'SELECT * FROM applications' })
-
-  return db.manyOrNone(applications)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query('select * from [dbo].[Applications]')
+    const applications = result.recordset
+    return applications
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const getApplication = async (id) => {
-  const application = new PS({ name: 'get-application', text: 'SELECT * FROM application WHERE id=$1' })
-  application.values = [id]
-  return db.one(application)
-    .then(res => {
-      return res
-    })
-    .catch(error => {
-      console.log(error)
-      return error
-    })
+  try {
+    await sql.connect(sqlConfig)
+    const result = await sql.query(`select * from [dbo].[Applications] WHERE pkiApplicationID = ${id}`)
+    const application = result.recordset[0]
+    return application
+  } catch (err) {
+    console.log(err.message)
+    return err.message
+  }
 }
 
 const updateApplication = async (application, id) => {
-  const updatedApplication = new PS({
-    name: 'update-application',
-    text: 'UPDATE applications SET name=$1, description=$2, start_date=to_timestamp($3), end_date=to_timestamp($4), image_url=$5, form_url=$6, bootcamp=$7 WHERE id=$8'
-  })
-
-  updatedApplication.values = [
-    application.name,
-    application.description,
-    application.start_date,
-    application.end_date,
-    application.image_url,
-    application.form_url,
-    application.bootcamp,
-    id
-  ]
+  try {
+    await sql.connect(sqlConfig)
+    await sql.query`UPDATE [dbo].[Events] SET 
+    sEventName=${application.sEventName}, 
+    sDescription=${event.sDescription}, 
+    dtStartDate=${event.dtStartDate}, 
+    dtEndDate=${event.dtEndDate}, 
+    sImageUrl=${event.sImageUrl}, 
+    sZoomUrl=${event.sZoomUrl}, 
+    fkiBootcampID=${event.fkiBootcampID}
+    WHERE pkiEventID = ${id}
+    `
+  } catch (err) {
+    console.log(err.message)
+  }
 
   return db.none(updatedApplication)
     .catch(error => {
@@ -212,9 +212,15 @@ const deleteApplication = async (id) => {
 const getBootcamps = async () => {
   try {
     await sql.connection(sqlConfig)
+<<<<<<< HEAD
     const result = await sql.query(`SELECT * FROM [dbo].[Bootcamps]`)
     const bootcamp = result.resultset[0]
     return bootcamp
+=======
+    const result = await sql.query('SELECT * FROM bootcamp')
+    const bootcamps = result
+    return bootcamps
+>>>>>>> cd412e59909f794b2e06865922a130eca57ce2a5
   } catch (err) {
     console.log(err.message)
     return err.message
@@ -236,8 +242,13 @@ const getBootcamp = async (id) => {
 const updateBootcamp = async (bootcamp, id) => {
   try {
     await sql.connection(sqlConfig)
+<<<<<<< HEAD
     const result = `
     UPDATE [dbo].[Bootcamps] SET 
+=======
+    await sql.query(`
+    UPDATE bootcamps SET 
+>>>>>>> cd412e59909f794b2e06865922a130eca57ce2a5
       sBootcampName=${bootcamp.sBootcampName}, 
       sDescription=${bootcamp.sDescription},
       dtStartDate=${bootcamp.dtStartDate},
@@ -245,7 +256,7 @@ const updateBootcamp = async (bootcamp, id) => {
       sImageUrl=${bootcamp.sImageUrl},
       sDefaultZoomUrl=${bootcamp.sDefaultZoomUrl}
     WHERE 
-      pkiBootcampID=${id}`
+      pkiBootcampID=${id}`)
   } catch (err) {
     console.log(err.message)
     return err.message
@@ -255,7 +266,7 @@ const updateBootcamp = async (bootcamp, id) => {
 const addBootcamp = async (bootcamp) => {
   try {
     await sql.connection(sqlConfig)
-    const result = await sql.query(`
+    await sql.query(`
     INSERT INTO 
     [dbo].[Bootcamps](
       sBootcampName,
@@ -271,7 +282,7 @@ const addBootcamp = async (bootcamp) => {
       ${bootcamp.dtEndDate},
       ${bootcamp.sImageUrl},
       ${bootcamp.sDefaultZoomUrl})`
-      )
+    )
   } catch (err) {
     console.log(err.message)
     return err.message
@@ -281,7 +292,7 @@ const addBootcamp = async (bootcamp) => {
 const deleteBootcamp = async (id) => {
   try {
     await sql.connection(sqlConfig)
-    const result = await sql.query(`DELETE FROM [dbo].[Bootcamps] WHERE pkiBootcampsID=${id}`)
+    await sql.query(`DELETE FROM [dbo].[Bootcamps] WHERE pkiBootcampsID=${id}`)
   } catch (err) {
     console.log(err.message)
     return err.message
