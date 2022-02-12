@@ -6,13 +6,13 @@ const bootcampType = new GraphQLObjectType({
   name: 'bootcamp',
   type: 'Mutation',
   fields: {
-    id: { type: GraphQLInt },
-    name: { type: GraphQLString },
-    description: { type: GraphQLString },
-    start_date: { type: GraphQLDate },
-    end_date: { type: GraphQLDate },
-    image_url: { type: GraphQLString },
-    default_zoom_url: { type: GraphQLString }
+    pkiBootcampID: { type: GraphQLInt },
+    sBootcampName: { type: GraphQLString },
+    sDescription: { type: GraphQLString },
+    dtStartDate: { type: GraphQLDate },
+    dtEndDate: { type: GraphQLDate },
+    sImageUrl: { type: GraphQLString },
+    sDefaultZoomUrl: { type: GraphQLString }
   }
 })
 
@@ -20,11 +20,11 @@ const bootcampInput = new GraphQLInputObjectType({
   name: 'bootcampInput',
   type: 'Input',
   fields: {
-    name: { type: GraphQLString },
-    description: { type: GraphQLString },
-    start_date: { type: GraphQLInt },
-    end_date: { type: GraphQLInt },
-    image_url: { type: GraphQLString },
+    sBootcampName: { type: GraphQLString },
+    sDescription: { type: GraphQLString },
+    dtStartDate: { type: GraphQLInt },
+    dtEndDate: { type: GraphQLInt },
+    sImageUrl: { type: GraphQLString },
     default_zoom_url: { type: GraphQLString }
   }
 })

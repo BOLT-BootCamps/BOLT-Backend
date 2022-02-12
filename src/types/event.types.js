@@ -6,14 +6,14 @@ const eventType = new GraphQLObjectType({
   name: 'event',
   type: 'Mutation',
   fields: {
-    id: { type: GraphQLInt },
-    name: { type: GraphQLString },
-    description: { type: GraphQLString },
-    start_date: { type: GraphQLDate },
-    end_date: { type: GraphQLDate },
-    image_url: { type: GraphQLString },
-    zoom_url: { type: GraphQLString },
-    bootcamp: { type: GraphQLInt }
+    pkiEventID: { type: GraphQLInt },
+    sEventName: { type: GraphQLString },
+    sDescription: { type: GraphQLString },
+    dtStartDate: { type: GraphQLDate },
+    dtEndDate: { type: GraphQLDate },
+    sImageUrl: { type: GraphQLString },
+    sZoomUrl: { type: GraphQLString },
+    fkiBootcampID: { type: GraphQLInt }
   }
 })
 
@@ -21,13 +21,13 @@ const eventInput = new GraphQLInputObjectType({
   name: 'eventInput',
   type: 'Input',
   fields: {
-    name: { type: GraphQLString },
-    description: { type: GraphQLString },
-    start_date: { type: GraphQLInt },
-    end_date: { type: GraphQLInt },
-    image_url: { type: GraphQLString },
-    zoom_url: { type: GraphQLString },
-    bootcamp: { type: GraphQLInt }
+    sEventName: { type: GraphQLString },
+    sDescription: { type: GraphQLString },
+    dtStartDate: { type: GraphQLInt },
+    dtEndDate: { type: GraphQLInt },
+    sImageUrl: { type: GraphQLString },
+    sZoomUrl: { type: GraphQLString },
+    fkiBootcampID: { type: GraphQLInt }
   }
 })
 

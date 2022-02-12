@@ -1,15 +1,17 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInputObjectType } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInputObjectType, GraphQLInt } = graphql
 
 const userType = new GraphQLObjectType({
   name: 'user',
   type: 'Mutation',
   fields: {
-    firstname: { type: GraphQLString },
-    lastname: { type: GraphQLString },
-    email: { type: GraphQLString },
-    username: { type: GraphQLString },
-    type: { type: GraphQLString }
+    pkiEventID: { type: GraphQLInt },
+    sFirstName: { type: GraphQLString },
+    sLastName: { type: GraphQLString },
+    sEmail: { type: GraphQLString },
+    sSchool: { type: GraphQLString },
+    sProgram: { type: GraphQLString },
+    sYearOfStudy: { type: GraphQLString },
   }
 })
 
@@ -17,11 +19,12 @@ const userInput = new GraphQLInputObjectType({
   name: 'userInput',
   type: 'Input',
   fields: {
-    firstname: { type: GraphQLString },
-    lastname: { type: GraphQLString },
-    email: { type: GraphQLString },
-    username: { type: GraphQLString },
-    type: { type: GraphQLString }
+    sFirstName: { type: GraphQLString },
+    sLastName: { type: GraphQLString },
+    sEmail: { type: GraphQLString },
+    sSchool: { type: GraphQLString },
+    sProgram: { type: GraphQLString },
+    sYearOfStudy: { type: GraphQLString },
   }
 })
 
