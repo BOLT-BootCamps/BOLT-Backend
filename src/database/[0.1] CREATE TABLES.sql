@@ -14,21 +14,21 @@
 --EXEC sp_changeobjectowner '<owner>.<tableName>', '<newOwner>'s
 
 
-IF OBJECT_ID(N'dbo.Bootcamps', N'U') IS NOT NULL
-DROP TABLE [dbo].[Bootcamps]
-GO 
-
 IF OBJECT_ID(N'dbo.Applications', N'U') IS NOT NULL
 DROP TABLE [dbo].[Applications]
-GO 
-
-IF OBJECT_ID(N'dbo.Users', N'U') IS NOT NULL
-DROP TABLE [dbo].[Users]
-GO 
+GO  
 
 IF OBJECT_ID(N'dbo.Events', N'U') IS NOT NULL
 DROP TABLE [dbo].[Events]
 GO 
+
+IF OBJECT_ID(N'dbo.Bootcamps', N'U') IS NOT NULL
+DROP TABLE [dbo].[Bootcamps]
+GO 
+
+IF OBJECT_ID(N'dbo.Users', N'U') IS NOT NULL
+DROP TABLE [dbo].[Users]
+GO
 
 --
 -- Name: bootcamps; Type: TABLE; Schema: dbo; Owner: fairnightzz
@@ -70,7 +70,7 @@ CREATE TABLE dbo.Events (
 
 ALTER TABLE dbo.Events ADD CONSTRAINT PK_EventID PRIMARY KEY(pkiEventID);
 ALTER TABLE dbo.Events ADD FOREIGN KEY (fkiBootcampID) REFERENCES dbo.Bootcamps(pkiBootcampID);
-CREATE NONCLUSTERED INDEX UNC_Bootcamps_fkiBootcampID ON dbo.Events (fkiBootcampID); 
+CREATE NONCLUSTERED INDEX UNC_Events_fkiBootcampID ON dbo.Events (fkiBootcampID); 
 
 --
 -- Name: users; Type: TABLE; Schema: dbo; Owner: postgres
