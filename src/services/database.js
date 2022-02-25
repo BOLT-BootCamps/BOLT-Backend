@@ -112,10 +112,10 @@ const updateEvent = async (event, id) => {
 }
 
 const addEvent = async (event) => {
-  try {
-    await sql.connect(sqlConfig)
-    await sql.query(`INSERT INTO [dbo].[Events] (
-    sEventName
+  await sql.connect(sqlConfig)
+  console.log(event)
+  await sql.query`INSERT INTO [dbo].[Events] (
+    sEventName,
     sDescription,
     dtStartDate,
     dtEndDate,
@@ -123,16 +123,12 @@ const addEvent = async (event) => {
     sZoomUrl
     )
     VALUES (
-    ${event.sEventName}, 
-    ${event.sDescription}, 
-    ${event.dtStartDate}, 
-    ${event.dtEndDate}, 
-    ${event.sImageUrl}, 
-    ${event.sZoomUrl})`
-    )
-  } catch (err) {
-    console.log(err.message)
-  }
+    '${event.sEventName}', 
+    '${event.sDescription}', 
+    '${event.dtStartDate}', 
+    '${event.dtEndDate}', 
+    '${event.sImageUrl}', 
+    '${event.sZoomUrl}')`
 }
 
 const deleteEvent = async (id) => {

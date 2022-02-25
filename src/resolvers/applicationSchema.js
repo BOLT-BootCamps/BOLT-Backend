@@ -8,6 +8,8 @@ const { applicationType, applicationsType, applicationInput } = require('../type
 
 const { applicationDB } = require('../services/database')
 
+const { isRole } = require('../services/auth.service')
+
 const application = {
   name: 'Application',
   type: applicationType,
@@ -48,7 +50,7 @@ const updateApplication = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (!isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {
@@ -72,7 +74,7 @@ const addApplication = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
 
@@ -95,7 +97,7 @@ const deleteApplication = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {

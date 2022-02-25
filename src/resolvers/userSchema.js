@@ -8,6 +8,8 @@ const { userType, usersType } = require('../types/user.types')
 
 const { userDB } = require('../services/database')
 
+const { isRole } = require('../services/auth.service')
+
 const user = {
   name: 'User',
   type: userType,
@@ -18,8 +20,7 @@ const user = {
     if (error) {
       throw new Error(error)
     }
-    console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin' && decoded.email !== obj.email) {
+    if (!isRole(decoded, 'Admin') && decoded.email !== obj.email) {
       throw new Error('Not Authorized.')
     } else {
       return userDB.getUser(decoded.email)
@@ -37,8 +38,7 @@ const users = {
     if (error) {
       throw new Error(error)
     } else if (decoded) {
-      console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
-      if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+      if (isRole(decoded, 'Admin')) {
         throw new Error('Not Authorized.')
       } else {
         return userDB.getUsers()

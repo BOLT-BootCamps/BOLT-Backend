@@ -8,6 +8,8 @@ const { bootcampType, bootcampsType, bootcampInput } = require('../types/bootcam
 
 const { bootcampDB } = require('../services/database')
 
+const { isRole } = require('../services/auth.service')
+
 const bootcamp = {
   name: 'Bootcamp',
   type: bootcampType,
@@ -48,7 +50,7 @@ const updateBootcamp = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {
@@ -72,7 +74,7 @@ const addBootcamp = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
 
@@ -95,8 +97,7 @@ const deleteBootcamp = {
     if (error) {
       throw new Error(error)
     }
-    console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {

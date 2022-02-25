@@ -8,6 +8,8 @@ const { eventType, eventsType, eventInput } = require('../types/event.types')
 
 const { eventDB } = require('../services/database')
 
+const { isRole } = require('../services/auth.service')
+
 const event = {
   name: 'Event',
   type: eventType,
@@ -48,7 +50,7 @@ const updateEvent = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {
@@ -72,15 +74,15 @@ const addEvent = {
     if (error) {
       throw new Error(error)
     }
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (!isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
 
     try {
-      await eventDB.addEvent(obj)
+      await eventDB.addEvent(obj.event)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (err) {
+      return err.message
     }
   }
 }
@@ -95,8 +97,7 @@ const deleteEvent = {
     if (error) {
       throw new Error(error)
     }
-    console.log(decoded['https://apibolt.zhehaizhang.com/roles'])
-    if (decoded['https://apibolt.zhehaizhang.com/roles'] !== 'Admin') {
+    if (!isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {
