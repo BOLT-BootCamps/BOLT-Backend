@@ -123,15 +123,17 @@ const addEvent = async (event) => {
     dtStartDate,
     dtEndDate,
     sImageUrl,
-    sZoomUrl
+    sZoomUrl,
+    fkiBootcampID
     )
     VALUES (
-    '${event.sEventName}', 
-    '${event.sDescription}', 
-    '${event.dtStartDate}', 
-    '${event.dtEndDate}', 
-    '${event.sImageUrl}', 
-    '${event.sZoomUrl}')`
+    ${event.sEventName}, 
+    ${event.sDescription}, 
+    CONVERT(DATETIME,${event.dtStartDate}, 120), 
+    CONVERT(DATETIME,${event.dtEndDate}, 120), 
+    ${event.sImageUrl}, 
+    ${event.sZoomUrl},
+    ${event.fkiBootcampID})`
 }
 
 const deleteEvent = async (id) => {
