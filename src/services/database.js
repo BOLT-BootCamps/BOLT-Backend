@@ -111,6 +111,9 @@ const updateEvent = async (event, id) => {
   }
 }
 
+// datetimes
+// https://www.mssqltips.com/sqlservertip/1145/date-and-time-conversions-using-sql-server/#:~:text=How%20to%20get%20different%20date%20formats%20in%20SQL,%20%2030%2F12%2F06%20%2026%20more%20rows%20
+
 const addEvent = async (event) => {
   await sql.connect(sqlConfig)
   console.log(event)
