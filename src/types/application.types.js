@@ -1,6 +1,5 @@
 const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType } = graphql
-const GraphQLDate = require('graphql-date')
 
 const applicationType = new GraphQLObjectType({
   name: 'application',
@@ -9,8 +8,8 @@ const applicationType = new GraphQLObjectType({
     pkiApplicationID: { type: GraphQLInt },
     sApplicationName: { type: GraphQLString },
     sDescription: { type: GraphQLString },
-    dtStartDate: { type: GraphQLDate },
-    dtEndDate: { type: GraphQLDate },
+    dtStartDate: { type: GraphQLString },
+    dtEndDate: { type: GraphQLString },
     sImageUrl: { type: GraphQLString },
     sFormUrl: { type: GraphQLString },
     fkiBootcampID: { type: GraphQLInt }
@@ -23,8 +22,8 @@ const applicationInput = new GraphQLInputObjectType({
   fields: {
     sApplicationName: { type: GraphQLString },
     sDescription: { type: GraphQLString },
-    dtStartDate: { type: GraphQLInt },
-    dtEndDate: { type: GraphQLInt },
+    dtStartDate: { type: GraphQLString },
+    dtEndDate: { type: GraphQLString },
     sImageUrl: { type: GraphQLString },
     sFormUrl: { type: GraphQLString },
     sBootcamp: { type: GraphQLInt }

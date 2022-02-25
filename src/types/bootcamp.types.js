@@ -1,6 +1,5 @@
 const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType } = graphql
-const GraphQLDate = require('graphql-date')
 
 const bootcampType = new GraphQLObjectType({
   name: 'bootcamp',
@@ -9,8 +8,8 @@ const bootcampType = new GraphQLObjectType({
     pkiBootcampID: { type: GraphQLInt },
     sBootcampName: { type: GraphQLString },
     sDescription: { type: GraphQLString },
-    dtStartDate: { type: GraphQLDate },
-    dtEndDate: { type: GraphQLDate },
+    dtStartDate: { type: GraphQLString },
+    dtEndDate: { type: GraphQLString },
     sImageUrl: { type: GraphQLString },
     sDefaultZoomUrl: { type: GraphQLString }
   }
@@ -22,8 +21,8 @@ const bootcampInput = new GraphQLInputObjectType({
   fields: {
     sBootcampName: { type: GraphQLString },
     sDescription: { type: GraphQLString },
-    dtStartDate: { type: GraphQLInt },
-    dtEndDate: { type: GraphQLInt },
+    dtStartDate: { type: GraphQLString },
+    dtEndDate: { type: GraphQLString },
     sImageUrl: { type: GraphQLString },
     default_zoom_url: { type: GraphQLString }
   }
