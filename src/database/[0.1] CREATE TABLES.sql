@@ -65,7 +65,7 @@ CREATE TABLE dbo.Events (
     sDescription NVARCHAR(4000),
     sImageUrl NVARCHAR(200),
     sZoomUrl NVARCHAR(200),
-    fkiBootcampID BIGINT DEFAULT 1
+    fkiBootcampID BIGINT DEFAULT 0
 );
 
 ALTER TABLE dbo.Events ADD CONSTRAINT PK_EventID PRIMARY KEY(pkiEventID);
