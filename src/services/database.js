@@ -209,14 +209,14 @@ const deleteApplication = async (id) => {
 const getBootcamps = async () => {
   await sql.connect(sqlConfig)
   const result = await sql.query`SELECT * FROM [dbo].[Bootcamps]`
-  const bootcamp = result.resultset[0]
-  return bootcamp
+  const bootcamps = result.recordset
+  return bootcamps
 }
 
 const getBootcamp = async (id) => {
   await sql.connect(sqlConfig)
   const result = await sql.query`SELECT * FROM [dbo].[Bootcamps] WHERE pkiBootcampID=${id}`
-  const bootcamp = result.resultset[0]
+  const bootcamp = result.recordset[0]
   return bootcamp
 }
 
