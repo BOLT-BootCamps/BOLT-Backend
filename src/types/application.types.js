@@ -1,5 +1,7 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLInputObjectType, GraphQLNonNull } = graphql
+
+const GraphQLDate = require('graphql-date')
 
 const applicationType = new GraphQLObjectType({
   name: 'application',
@@ -8,8 +10,8 @@ const applicationType = new GraphQLObjectType({
     pkiApplicationID: { type: GraphQLInt },
     sApplicationName: { type: GraphQLString },
     sDescription: { type: GraphQLString },
-    dtStartDate: { type: GraphQLString },
-    dtEndDate: { type: GraphQLString },
+    dtStartDate: { type: GraphQLDate },
+    dtEndDate: { type: GraphQLDate },
     sImageUrl: { type: GraphQLString },
     sFormUrl: { type: GraphQLString },
     fkiBootcampID: { type: GraphQLInt }
@@ -20,13 +22,13 @@ const applicationInput = new GraphQLInputObjectType({
   name: 'applicationInput',
   type: 'Input',
   fields: {
-    sApplicationName: { type: GraphQLString },
-    sDescription: { type: GraphQLString },
-    dtStartDate: { type: GraphQLString },
-    dtEndDate: { type: GraphQLString },
-    sImageUrl: { type: GraphQLString },
-    sFormUrl: { type: GraphQLString },
-    sBootcamp: { type: GraphQLInt }
+    sApplicationName: { type: GraphQLNonNull(GraphQLString) },
+    sDescription: { type: GraphQLNonNull(GraphQLString) },
+    dtStartDate: { type: GraphQLNonNull(GraphQLString) },
+    dtEndDate: { type: GraphQLNonNull(GraphQLString) },
+    sImageUrl: { type: GraphQLNonNull(GraphQLString) },
+    sFormUrl: { type: GraphQLNonNull(GraphQLString) },
+    sBootcamp: { type: GraphQLNonNull(GraphQLInt) }
   }
 })
 
