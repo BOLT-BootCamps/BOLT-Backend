@@ -14,7 +14,8 @@ const eventType = new GraphQLObjectType({
     dtEndDate: { type: GraphQLDate },
     sImageUrl: { type: GraphQLString },
     sZoomUrl: { type: GraphQLString },
-    fkiBootcampID: { type: GraphQLInt }
+    fkiBootcampID: { type: GraphQLInt },
+    sBootcampName: { type: GraphQLString }
   }
 })
 
