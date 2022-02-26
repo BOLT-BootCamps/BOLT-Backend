@@ -105,7 +105,6 @@ const updateEvent = async (event, id) => {
 
 const addEvent = async (event) => {
   await sql.connect(sqlConfig)
-  console.log(event)
   await sql.query`INSERT INTO [dbo].[Events] (
     sEventName,
     sDescription,
@@ -182,7 +181,7 @@ const updateApplication = async (application, id) => {
 }
 
 const addApplication = async (application) => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   await sql.query`
     INSERT INTO [dbo].[Applications](
       sApplicationName,
@@ -203,26 +202,26 @@ const addApplication = async (application) => {
 }
 
 const deleteApplication = async (id) => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   await sql.query`DELETE FROM [dbo].[Applications] WHERE pkiApplicatiID=${id}`
 }
 
 const getBootcamps = async () => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   const result = await sql.query`SELECT * FROM [dbo].[Bootcamps]`
   const bootcamp = result.resultset[0]
   return bootcamp
 }
 
 const getBootcamp = async (id) => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   const result = await sql.query`SELECT * FROM [dbo].[Bootcamps] WHERE pkiBootcampID=${id}`
   const bootcamp = result.resultset[0]
   return bootcamp
 }
 
 const updateBootcamp = async (bootcamp, id) => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   await sql.query`
     UPDATE [dbo].[Bootcamps] SET 
       sBootcampName=${bootcamp.sBootcampName}, 
@@ -236,7 +235,7 @@ const updateBootcamp = async (bootcamp, id) => {
 }
 
 const addBootcamp = async (bootcamp) => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   await sql.query`
     INSERT INTO 
     [dbo].[Bootcamps](
@@ -256,7 +255,7 @@ const addBootcamp = async (bootcamp) => {
 }
 
 const deleteBootcamp = async (id) => {
-  await sql.connection(sqlConfig)
+  await sql.connect(sqlConfig)
   await sql.query`DELETE FROM [dbo].[Bootcamps] WHERE pkiBootcampsID=${id}`
 }
 
