@@ -140,7 +140,8 @@ const getApplications = async () => {
       a.sImageUrl,
       a.sFormUrl,
       a.fkiBootcampID,
-      b.sBootcampName 
+      b.sBootcampName,
+      a.iNumApplicants
       FROM [dbo].[Applications] a LEFT JOIN [dbo].[Bootcamps] b
       ON a.fkiApplicationID = b.pkiBootcampID`
   const applications = result.recordset
@@ -158,7 +159,8 @@ const getApplication = async (id) => {
       a.sImageUrl,
       a.sFormUrl,
       a.fkiBootcampID,
-      b.sBootcampName 
+      b.sBootcampName,
+      a.iNumApplicants
       FROM [dbo].[Applications] a LEFT JOIN [dbo].[Bootcamps] b
       ON a.fkiApplicationID = b.pkiBootcampID
       WHERE a.pkiApplicationID = ${id}`
@@ -176,6 +178,7 @@ const updateApplication = async (application, id) => {
     sImageUrl=${application.sImageUrl}, 
     sFormUrl=${application.sFormUrl}, 
     fkiBootcampID=${application.fkiBootcampID}
+    iNumApplicants=${application.iNumApplicants}
     WHERE pkiApplicationID = ${id}
     `
 }

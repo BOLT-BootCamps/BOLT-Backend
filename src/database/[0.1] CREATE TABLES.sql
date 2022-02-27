@@ -102,7 +102,8 @@ CREATE TABLE dbo.Applications (
     sDescription NVARCHAR(4000),
     sImageUrl NVARCHAR(200),
     sFormUrl NVARCHAR(200),
-    fkiBootcampID INT DEFAULT 0
+    fkiBootcampID INT DEFAULT 0,
+    iNumApplicants INT DEFAULT 0
 );
 
 ALTER TABLE dbo.Applications ADD CONSTRAINT PK_ApplicationID PRIMARY KEY(pkiApplicationID);
