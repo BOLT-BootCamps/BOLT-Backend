@@ -143,7 +143,7 @@ const getApplications = async () => {
       b.sBootcampName,
       a.iNumApplicants
       FROM [dbo].[Applications] a LEFT JOIN [dbo].[Bootcamps] b
-      ON a.fkiApplicationID = b.pkiBootcampID`
+      ON a.fkiBootcampID = b.pkiBootcampID`
   const applications = result.recordset
   return applications
 }
@@ -162,8 +162,8 @@ const getApplication = async (id) => {
       b.sBootcampName,
       a.iNumApplicants
       FROM [dbo].[Applications] a LEFT JOIN [dbo].[Bootcamps] b
-      ON a.fkiApplicationID = b.pkiBootcampID
-      WHERE a.pkiApplicationID = ${id}`
+      ON a.pkiApplicationID = b.pkiBootcampID
+      WHERE a.pkiBootcampID = ${id}`
   const application = result.recordset[0]
   return application
 }
