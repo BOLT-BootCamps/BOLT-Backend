@@ -91,8 +91,8 @@ const updateEvent = async (event, id) => {
   await sql.query`UPDATE [dbo].[Events] SET 
     sEventName=${event.sEventName}, 
     sDescription=${event.sDescription}, 
-    dtStartDate=CONVERT(DATETIME, ${event.dtStartDate}, 120), 
-    dtEndDate=CONVERT(DATETIME, ${event.dtEndDate}, 120), 
+    dtStartDate=CONVERT(DATETIME, ${event.dtStartDate}, 127), 
+    dtEndDate=CONVERT(DATETIME, ${event.dtEndDate}, 127), 
     sImageUrl=${event.sImageUrl}, 
     sZoomUrl=${event.sZoomUrl}, 
     fkiBootcampID=${event.fkiBootcampID}
@@ -117,8 +117,8 @@ const addEvent = async (event) => {
     VALUES (
     ${event.sEventName}, 
     ${event.sDescription}, 
-    CONVERT(DATETIME,${event.dtStartDate}, 120), 
-    CONVERT(DATETIME,${event.dtEndDate}, 120), 
+    CONVERT(DATETIME,${event.dtStartDate}, 127), 
+    CONVERT(DATETIME,${event.dtEndDate}, 127), 
     ${event.sImageUrl}, 
     ${event.sZoomUrl},
     ${event.fkiBootcampID})`
@@ -173,8 +173,8 @@ const updateApplication = async (application, id) => {
   await sql.query`UPDATE [dbo].[Applications] SET 
     sApplicationName=${application.sApplicationName}, 
     sDescription=${application.sDescription}, 
-    dtStartDate=CONVERT(DATETIME, ${application.dtStartDate}, 120), 
-    dtEndDate=CONVERT(DATETIME, ${application.dtEndDate}, 120), 
+    dtStartDate=CONVERT(DATETIME, ${application.dtStartDate}, 127), 
+    dtEndDate=CONVERT(DATETIME, ${application.dtEndDate}, 127), 
     sImageUrl=${application.sImageUrl}, 
     sFormUrl=${application.sFormUrl}, 
     fkiBootcampID=${application.fkiBootcampID}
@@ -197,8 +197,8 @@ const addApplication = async (application) => {
     VALUES(
       ${application.sApplicationName},
       ${application.sDescription},
-      CONVERT(DATETIME, ${application.dtStartDate}, 120),
-      CONVERT(DATETIME, ${application.dtEndDate}, 120),
+      CONVERT(DATETIME, ${application.dtStartDate}, 127),
+      CONVERT(DATETIME, ${application.dtEndDate}, 127),
       ${application.sImageUrl},
       ${application.sFormUrl},
       ${application.fkiBootcampID})`
@@ -229,8 +229,8 @@ const updateBootcamp = async (bootcamp, id) => {
     UPDATE [dbo].[Bootcamps] SET 
       sBootcampName=${bootcamp.sBootcampName}, 
       sDescription=${bootcamp.sDescription},
-      dtStartDate=CONVERT(DATETIME, ${bootcamp.dtStartDate} 120),
-      dtEndDate=CONVERT(DATETIME, ${bootcamp.dtEndDate}, 120),
+      dtStartDate=CONVERT(DATETIME, ${bootcamp.dtStartDate} 127),
+      dtEndDate=CONVERT(DATETIME, ${bootcamp.dtEndDate}, 127),
       sImageUrl=${bootcamp.sImageUrl},
       sDefaultZoomUrl=${bootcamp.sDefaultZoomUrl}
     WHERE 
@@ -251,8 +251,8 @@ const addBootcamp = async (bootcamp) => {
     VALUES(
       ${bootcamp.sBootcampName},
       ${bootcamp.sDescription},
-      CONVERT(DATETIME, ${bootcamp.dtStartDate}, 120),
-      CONVERT(DATETIME, ${bootcamp.dtEndDate}, 120),
+      CONVERT(DATETIME, ${bootcamp.dtStartDate}, 127),
+      CONVERT(DATETIME, ${bootcamp.dtEndDate}, 127),
       ${bootcamp.sImageUrl},
       ${bootcamp.sDefaultZoomUrl})`
 }
