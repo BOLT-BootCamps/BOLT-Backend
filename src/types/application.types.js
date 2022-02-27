@@ -14,7 +14,8 @@ const applicationType = new GraphQLObjectType({
     dtEndDate: { type: GraphQLDate },
     sImageUrl: { type: GraphQLString },
     sFormUrl: { type: GraphQLString },
-    fkiBootcampID: { type: GraphQLInt }
+    fkiBootcampID: { type: GraphQLInt },
+    iNumApplicants: { type: GraphQLInt }
   }
 })
 
@@ -28,7 +29,7 @@ const applicationInput = new GraphQLInputObjectType({
     dtEndDate: { type: GraphQLNonNull(GraphQLString) },
     sImageUrl: { type: GraphQLNonNull(GraphQLString) },
     sFormUrl: { type: GraphQLNonNull(GraphQLString) },
-    sBootcamp: { type: GraphQLNonNull(GraphQLInt) }
+    fkiBootcampID: { type: GraphQLNonNull(GraphQLInt) }
   }
 })
 
