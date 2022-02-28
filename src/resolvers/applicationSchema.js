@@ -74,7 +74,7 @@ const addApplication = {
     if (error) {
       throw new Error(error)
     }
-    if (isRole(decoded, 'Admin')) {
+    if (!isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
 
@@ -97,7 +97,7 @@ const deleteApplication = {
     if (error) {
       throw new Error(error)
     }
-    if (isRole(decoded, 'Admin')) {
+    if (!isRole(decoded, 'Admin')) {
       throw new Error('Not Authorized.')
     }
     try {

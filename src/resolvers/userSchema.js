@@ -38,7 +38,7 @@ const users = {
     if (error) {
       throw new Error(error)
     } else if (decoded) {
-      if (isRole(decoded, 'Admin')) {
+      if (!isRole(decoded, 'Admin')) {
         throw new Error('Not Authorized.')
       } else {
         return userDB.getUsers()
