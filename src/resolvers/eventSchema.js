@@ -56,8 +56,8 @@ const updateEvent = {
     try {
       await eventDB.updateEvent(obj.event, obj.id)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (e) {
+      return e.message
     }
   }
 }

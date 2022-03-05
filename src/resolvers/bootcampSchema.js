@@ -56,8 +56,8 @@ const updateBootcamp = {
     try {
       await bootcampDB.updateBootcamp(obj.bootcamp, obj.id)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (e) {
+      return e.message
     }
   }
 }

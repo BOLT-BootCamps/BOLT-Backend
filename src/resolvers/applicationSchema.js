@@ -56,8 +56,8 @@ const updateApplication = {
     try {
       await applicationDB.updateApplication(obj.application, obj.id)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (e) {
+      return e.message
     }
   }
 }
@@ -81,8 +81,8 @@ const addApplication = {
     try {
       await applicationDB.addApplication(obj.application)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (e) {
+      return e.message
     }
   }
 }
@@ -103,8 +103,8 @@ const deleteApplication = {
     try {
       await applicationDB.deleteApplication(obj.id)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (e) {
+      return e.message
     }
   }
 }
