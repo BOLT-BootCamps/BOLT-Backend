@@ -8,7 +8,7 @@ const { applicationType, applicationsType, applicationInput } = require('../type
 
 const { applicationDB } = require('../services/database')
 
-const { isRole } = require('../services/auth.service')
+const { isRole, getEmail } = require('../services/auth.service')
 
 const application = {
   name: 'Application',
@@ -78,8 +78,9 @@ const addApplication = {
       throw new Error('Not Authorized.')
     }
 
+    const userEmail = getEmail(decoded)
     try {
-      await applicationDB.addApplication(obj.application)
+      await applicationDB.addApplication(obj.application, userEmail)
       return 'success'
     } catch (e) {
       return e.message
