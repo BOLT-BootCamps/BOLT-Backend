@@ -25,7 +25,7 @@ const bootcampInput = new GraphQLInputObjectType({
     dtStartDate: { type: GraphQLNonNull(GraphQLString) },
     dtEndDate: { type: GraphQLNonNull(GraphQLString) },
     sImageUrl: { type: GraphQLNonNull(GraphQLString) },
-    default_zoom_url: { type: GraphQLNonNull(GraphQLString) }
+    sDefaultZoomUrl: { type: GraphQLNonNull(GraphQLString) }
   }
 })
 
