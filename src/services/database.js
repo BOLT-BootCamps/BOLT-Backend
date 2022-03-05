@@ -193,7 +193,8 @@ const addApplication = async (application) => {
       dtEndDate,
       sImageUrl,
       sFormUrl,
-      fkiBootcampID)
+      fkiBootcampID,
+      fkiUserID)
     VALUES(
       ${application.sApplicationName},
       ${application.sDescription},
@@ -201,7 +202,8 @@ const addApplication = async (application) => {
       CONVERT(DATETIME, ${application.dtEndDate}, 127),
       ${application.sImageUrl},
       ${application.sFormUrl},
-      ${application.fkiBootcampID})`
+      ${application.fkiBootcampID},
+      ${application.fkiUserID})`
 }
 
 const deleteApplication = async (id) => {
