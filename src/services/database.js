@@ -41,12 +41,12 @@ const addUser = async (user) => {
   await sql.query`INSERT INTO [dbo].[Users] (
     sFirstName,
     sLastName,
-    sEmail,
+    sEmail
     )
     VALUES (
     ${user.sFirstName}, 
     ${user.sLastName}, 
-    ${user.sEmail}, 
+    ${user.sEmail}
     )
     `
 }

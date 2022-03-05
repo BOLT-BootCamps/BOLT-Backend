@@ -6,10 +6,9 @@ require('dotenv').config()
 router.post('/addUser', async (req, res, next) => {
   console.log(req.get('host'))
 
-  const firstname = req.body.firstname || ''
-  const lastname = req.body.lastname || ''
-  const username = req.body.username || req.body.email
-  const email = req.body.email
+  const sFirstName = req.body.sFirstName || ''
+  const sLastName = req.body.sLastName || ''
+  const sEmail = req.body.sEmail
   const auth = req.body.auth
 
   if (auth !== process.env.AUTH0_VERIFICATION) {
@@ -18,7 +17,13 @@ router.post('/addUser', async (req, res, next) => {
     })
   }
 
-  await userDB.addUser({ firstname, lastname, username, email })
+  try {
+    await userDB.addUser({ sFirstName, sLastName, sEmail })
+  } catch (e) {
+    res.status(500).json({
+      message: e.message
+    })
+  }
 
   res.status(200).send()
 })
@@ -33,9 +38,14 @@ router.post('/emailExists', async (req, res, next) => {
       message: 'Invalid.'
     })
   }
-  console.log(email)
-  const user = await userDB.userExists(email)
-
+  let user
+  try {
+    user = await userDB.userExists(email)
+  } catch (e) {
+    res.status(500).json({
+      message: e.message
+    })
+  }
   if (user) {
     res.status(200).send()
     console.log('User does exist')
