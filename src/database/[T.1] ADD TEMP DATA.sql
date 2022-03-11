@@ -35,3 +35,21 @@ INSERT INTO dbo.Applications (
     'NULL',
     'NULL'
 );
+
+INSERT INTO dbo.Users (
+    bAdmin,
+    sFirstName,
+    sLastName,
+    sEmail,
+    sSchool,
+    sProgram,
+    sYearOfStudy
+) VALUES (
+    1,
+    'Thomas',
+    'Villeneuve',
+    'thomas.e.villeneuve@gmail.com',
+    'McGill',
+    'Management',
+    'Graduated'
+);
