@@ -151,6 +151,7 @@ const getApplications = async () => {
 const getApplication = async (id) => {
   await sql.connect(sqlConfig)
   const result = await sql.query`
+      SELECT
       a.pkiApplicationID,
       a.sApplicationName,
       a.sDescription,
@@ -163,7 +164,7 @@ const getApplication = async (id) => {
       a.iNumApplicants
       FROM [dbo].[Applications] a LEFT JOIN [dbo].[Bootcamps] b
       ON a.pkiApplicationID = b.pkiBootcampID
-      WHERE a.pkiBootcampID = ${id}`
+      WHERE a.pkiApplicationID = ${id}`
   const application = result.recordset[0]
   return application
 }
@@ -178,7 +179,6 @@ const updateApplication = async (application, id) => {
     sImageUrl=${application.sImageUrl}, 
     sFormUrl=${application.sFormUrl}, 
     fkiBootcampID=${application.fkiBootcampID}
-    iNumApplicants=${application.iNumApplicants}
     WHERE pkiApplicationID = ${id}
     `
 }
