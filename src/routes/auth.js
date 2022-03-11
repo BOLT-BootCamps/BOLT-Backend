@@ -4,10 +4,11 @@ const { userDB } = require('../services/database')
 require('dotenv').config()
 
 router.post('/addUser', async (req, res, next) => {
-  console.log(req.get('host'))
-
   const sFirstName = req.body.sFirstName || ''
   const sLastName = req.body.sLastName || ''
+  const sSchool = req.body.sSchool || ''
+  const sProgram = req.body.sProgram || ''
+  const sYearOfStudy = req.body.sYearOfStudy || ''
   const sEmail = req.body.sEmail
   const auth = req.body.auth
 
@@ -18,23 +19,28 @@ router.post('/addUser', async (req, res, next) => {
   }
 
   try {
-    await userDB.addUser({ sFirstName, sLastName, sEmail })
+    const user = await userDB.userExists(sEmail)
+    if (user > 0) {
+      return res.status(500).json({
+        message: 'User exists'
+      })
+    }
+    await userDB.addUser({ sFirstName, sLastName, sEmail, sSchool, sProgram, sYearOfStudy })
   } catch (e) {
-    res.status(500).json({
+    return res.status(500).json({
       message: e.message
     })
   }
 
-  res.status(200).send()
+  return res.status(200).send()
 })
 
 router.post('/emailExists', async (req, res, next) => {
-  const email = req.body.email
+  const email = req.body.sEmail
   const auth = req.body.auth
 
   if (auth !== process.env.AUTH0_VERIFICATION) {
-    console.log('not authenticated')
-    res.status(400).json({
+    return res.status(400).json({
       message: 'Invalid.'
     })
   }
@@ -42,16 +48,18 @@ router.post('/emailExists', async (req, res, next) => {
   try {
     user = await userDB.userExists(email)
   } catch (e) {
-    res.status(500).json({
+    return res.status(500).json({
       message: e.message
     })
   }
-  if (user) {
-    res.status(200).send()
-    console.log('User does exist')
+  if (user > 0) {
+    return res.status(200).json({
+      message: 'User does exist'
+    })
   } else {
-    res.status(201).send()
-    console.log('User does not exist')
+    return res.status(201).json({
+      message: 'User does not exist'
+    })
   }
 })
 
