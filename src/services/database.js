@@ -186,6 +186,12 @@ const updateApplication = async (application, id) => {
 const addApplication = async (application, email) => {
   await sql.connect(sqlConfig)
   await sql.query`
+    DECLARE @count INT
+    SELECT @count = COUNT(pkiUserID) FROM [dbo].[Users] WHERE sEmail = ${email}
+    IF @count < 1
+    BEGIN
+      RAISERROR (15600,-1,-1, 'addApplications');
+    END
     INSERT INTO [dbo].[Applications](
       sApplicationName,
       sDescription,
