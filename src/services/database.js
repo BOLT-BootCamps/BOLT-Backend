@@ -183,7 +183,7 @@ const updateApplication = async (application, id) => {
     `
 }
 
-const addApplication = async (application) => {
+const addApplication = async (application, email) => {
   await sql.connect(sqlConfig)
   await sql.query`
     INSERT INTO [dbo].[Applications](
@@ -195,7 +195,7 @@ const addApplication = async (application) => {
       sFormUrl,
       fkiBootcampID,
       fkiUserID)
-    VALUES(
+    SELECT
       ${application.sApplicationName},
       ${application.sDescription},
       CONVERT(DATETIME, ${application.dtStartDate}, 127),
@@ -203,7 +203,10 @@ const addApplication = async (application) => {
       ${application.sImageUrl},
       ${application.sFormUrl},
       ${application.fkiBootcampID},
-      ${application.fkiUserID})`
+      users.pkiUserID
+      FROM [dbo].[Users] users 
+      WHERE users.sEmail = ${email}
+      `
 }
 
 const deleteApplication = async (id) => {
