@@ -25,7 +25,8 @@ async function checkToken (token) {
     return {
       error: null,
       decoded: {
-        'https://apibolt.zhehaizhang.com/roles': 'Admin'
+        'https://apibolt.zhehaizhang.com/roles': 'Admin',
+        'https://apibolt.zhehaizhang.com/email': 'thomas.e.villeneuve@gmail.com'
       }
     }
   }
