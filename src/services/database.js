@@ -223,7 +223,7 @@ const addApplication = async (application, email) => {
 
 const deleteApplication = async (id) => {
   await sql.connect(sqlConfig)
-  await sql.query`DELETE FROM [dbo].[Applications] WHERE pkiApplicatiID=${id}`
+  await sql.query`DELETE FROM [dbo].[Applications] WHERE pkiApplicationID=${id}`
 }
 
 const getBootcamps = async () => {
