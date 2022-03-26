@@ -246,7 +246,7 @@ const updateBootcamp = async (bootcamp, id) => {
     UPDATE [dbo].[Bootcamps] SET 
       sBootcampName=${bootcamp.sBootcampName}, 
       sDescription=${bootcamp.sDescription},
-      dtStartDate=CONVERT(DATETIME, ${bootcamp.dtStartDate} 127),
+      dtStartDate=CONVERT(DATETIME, ${bootcamp.dtStartDate}, 127),
       dtEndDate=CONVERT(DATETIME, ${bootcamp.dtEndDate}, 127),
       sImageUrl=${bootcamp.sImageUrl},
       sDefaultZoomUrl=${bootcamp.sDefaultZoomUrl}
