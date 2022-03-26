@@ -103,8 +103,8 @@ const deleteEvent = {
     try {
       await eventDB.deleteEvent(obj.id)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (err) {
+      return err.message
     }
   }
 }

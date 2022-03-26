@@ -103,8 +103,8 @@ const deleteBootcamp = {
     try {
       await bootcampDB.deleteBootcamp(obj.id)
       return 'success'
-    } catch {
-      return 'failure'
+    } catch (err) {
+      return err.message
     }
   }
 }

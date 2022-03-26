@@ -276,7 +276,7 @@ const addBootcamp = async (bootcamp) => {
 
 const deleteBootcamp = async (id) => {
   await sql.connect(sqlConfig)
-  await sql.query`DELETE FROM [dbo].[Bootcamps] WHERE pkiBootcampsID=${id}`
+  await sql.query`DELETE FROM [dbo].[Bootcamps] WHERE pkiBootcampID=${id}`
 }
 
 exports.userDB = {
