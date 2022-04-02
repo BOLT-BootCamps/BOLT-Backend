@@ -10,6 +10,8 @@ const { bootcamps, bootcamp } = require('./bootcampSchema')
 
 const { event, events } = require('./eventSchema')
 
+const { zoom, zooms } = require('./zoomSchema')
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   type: 'Query',
@@ -28,9 +30,13 @@ const RootQuery = new GraphQLObjectType({
 
     // Events
     event: event,
-    events: events
+    events: events,
 
     // Admin
+
+    // Zoom
+    zoom: zoom,
+    zooms: zooms
   }
 })
 
