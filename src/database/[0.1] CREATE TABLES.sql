@@ -40,7 +40,7 @@ CREATE TABLE dbo.Bootcamps (
     dtStartDate DATETIME NOT NULL,
     dtEndDate DATETIME NOT NULL,
     sDescription NVARCHAR(4000),
-    sImageUrl NVARCHAR(200),
+    sImageUrl NVARCHAR(2048),
     sDefaultZoomUrl NVARCHAR(200)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE dbo.Events (
     dtStartDate DATETIME NOT NULL,
     dtEndDate DATETIME NOT NULL,
     sDescription NVARCHAR(4000),
-    sImageUrl NVARCHAR(200),
+    sImageUrl NVARCHAR(2048),
     sZoomUrl NVARCHAR(200),
     fkiBootcampID BIGINT DEFAULT 0
 );
@@ -100,7 +100,7 @@ CREATE TABLE dbo.Applications (
     dtStartDate DATETIME NOT NULL,
     dtEndDate DATETIME NOT NULL,
     sDescription NVARCHAR(4000),
-    sImageUrl NVARCHAR(200),
+    sImageUrl NVARCHAR(2048),
     sFormUrl NVARCHAR(200),
     fkiBootcampID INT DEFAULT 0,
     iNumApplicants INT DEFAULT 0
